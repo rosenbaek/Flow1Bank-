@@ -7,44 +7,32 @@ public class Account
     private String name;
     private int customerId;
     private ArrayList transactionList;
-    private String printTransactions;
 
-    public Account(int accountId, double balance, String name, int customerId, ArrayList transactionList, String printTransactions) {
+    public Account(int accountId, double balance, String name, int customerId, ArrayList transactionList) {
         this.accountId = accountId;
         this.balance = balance;
         this.name = name;
         this.customerId = customerId;
         this.transactionList = transactionList;
-        this.printTransactions = printTransactions;
     }
 
-    public void setAccountId(int accountId)
-    {
-        this.accountId = accountId;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setBalance(double balance)
-    {
-        this.balance = balance;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
-    public void setCustomerId(int customerId)
-    {
-        this.customerId = customerId;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setTransactionList(ArrayList transactionList)
-    {
-        this.transactionList = transactionList;
-    }
-
-    public void setPrintTransactions(String printTransactions)
-    {
-        this.printTransactions = printTransactions;
+    public ArrayList getTransactionList() {
+        return transactionList;
     }
 }
