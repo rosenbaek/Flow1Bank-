@@ -3,8 +3,13 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args)
     {
-        //Opens connection to Database
+        //Må ikke udkommenteres
         Utility.prepareConnection();
+
+        DisplayMenu.displayMenu();
+
+       /* //Opens connection to Database
+
 
         //Test Database Calls
         Utility.createBankInDatabase("Ebberød Bank", "CPH");
@@ -18,6 +23,6 @@ public class Main {
         c1.depositMoney();
         c1.checkBalance();
 
-        System.out.println("Test completed.");
+        System.out.println("Test completed.");*/
     }
 }

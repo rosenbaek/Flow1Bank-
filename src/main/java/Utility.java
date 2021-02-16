@@ -13,10 +13,19 @@ public abstract class Utility {
     private static PreparedStatement ps_add_transaction;
     private static PreparedStatement ps_add_account;
 
-    public static String promptForAnswer() {
+    public static String promptForAnswer(String text) {
+        System.out.println(text);
         Scanner keyboard = new Scanner(System.in);
         String input = keyboard.nextLine();
         return input;
+    }
+
+    public static int promptForAnswerInt(String text) {
+        System.out.println(text);
+        Scanner keyboard = new Scanner(System.in);
+        String input = keyboard.nextLine();
+        int output = Integer.parseInt(input);
+        return output;
     }
 
     public static double promptForAnswerDouble() {
