@@ -14,20 +14,11 @@ public class Employee
     }
 
     //Getters
-    public int getEmployeeId()
-    {
-        return employeeId;
-    }
+    public int getEmployeeId() { return employeeId; }
 
-    public String getEmployeeName()
-    {
-        return employeeName;
-    }
+    public String getEmployeeName() { return employeeName; }
 
-    public String getEmployeeCity()
-    {
-        return employeeCity;
-    }
+    public String getEmployeeCity() { return employeeCity; }
 
     //Methods
     public int withdrawMoney()
