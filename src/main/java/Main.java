@@ -1,6 +1,15 @@
 public class Main {
     public static void main(String[] args)
     {
+        //Opens connection to Database
+        Utility.prepareConnection();
+
+        //Test Database Calls
+        Utility.createBankInDatabase("Ebberød Bank", "CPH");
+        Utility.createCustomerInDatabase("Christian", "CPH", 1);
+        Utility.createAccountInDatabase("Lønkonto","CPH",1);
+        Utility.createTransactionInDatabase(111, 1);
+
         //Testing customer
         Customer c1 = new Customer(01,"Mr. Tester","England");
         c1.withdrawMoney();
