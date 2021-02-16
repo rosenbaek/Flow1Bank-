@@ -19,10 +19,7 @@ public class Customer
     }
 
     //Getters
-    public int getCustomerId()
-    {
-        return customerId;
-    }
+    public int getCustomerId() { return customerId; }
 
     public String getCustomerName()
     {
