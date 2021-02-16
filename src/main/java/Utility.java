@@ -1,7 +1,8 @@
 import java.lang.*;
 import java.sql.*;
+import java.util.Scanner;
 
-
+//@Christian
 public abstract class Utility {
     private static String URL = "jdbc:mysql://localhost:3306/ebberodBank?serverTimezone=UTC";
     private static String USER = "bank";
@@ -11,6 +12,24 @@ public abstract class Utility {
     private static PreparedStatement ps_add_bank;
     private static PreparedStatement ps_add_transaction;
     private static PreparedStatement ps_add_account;
+
+    public static String promptForAnswer() {
+        Scanner keyboard = new Scanner(System.in);
+        String input = keyboard.nextLine();
+        return input;
+    }
+
+    public static double promptForAnswerDouble() {
+        Scanner keyboard = new Scanner(System.in);
+        String input = keyboard.nextLine();
+        input = input.replace(",",".");
+        double doubleinput = Double.parseDouble(input);
+        return doubleinput;
+    }
+
+    /////////////////////////////////
+    // DATABASE INTERGRATION BELOW //
+    /////////////////////////////////
 
     //Creates bank
     public static void createBankInDatabase(String name, String city) {
