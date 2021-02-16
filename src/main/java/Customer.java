@@ -24,12 +24,12 @@ public class Customer
         return customerId;
     }
 
-    public String getName()
+    public String getCustomerName()
     {
         return customerName;
     }
 
-    public String getCity()
+    public String getCustomerCity()
     {
         return customerCity;
     }
@@ -75,7 +75,4 @@ public class Customer
     {
         return 0;
     }
-
-
-
 }

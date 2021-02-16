@@ -30,5 +30,19 @@ public class Employee
     }
 
     //Methods
+    public int withdrawMoney()
+    {
+        return 0;
+    }
+
+    public int depositMoney()
+    {
+        return 0;
+    }
+
+    public int checkBalance()
+    {
+        return 0;
+    }
 
 }
