@@ -34,4 +34,13 @@ public class Transaction
         return accountId;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", amount=" + amount +
+                ", date='" + date + '\'' +
+                ", accountId=" + accountId +
+                '}';
+    }
 }

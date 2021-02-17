@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class DisplayMenu {
 
+    public static Customer customer;
 
     public static void displayMenu(){
         Scanner scan = new Scanner(System.in);
@@ -46,11 +47,10 @@ public class DisplayMenu {
                     //Enter Customer
                     //Todo Make customer interface
                     System.out.println("Here is a list of all customers");
-                    for (Customer tmp:Utility.returnCustomer()) {
+                    for (Customer tmp:Utility.returnAllCustomers()) {
                         System.out.println(tmp.toString());
                     }
-
-                    Customer customer = new Customer(10, "Chris", "cph");
+                    customer = Utility.returnCustomer(Utility.promptForAnswerInt("Write ID on the customer you will choose"));
                     customer.customerMenu();
                     break;
                 case "5":

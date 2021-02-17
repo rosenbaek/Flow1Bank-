@@ -8,18 +8,35 @@ public class Account
     private int customerId;
     private ArrayList<Transaction> transactionList;
 
-    public Account(int accountId, String name, int customerId, ArrayList<Transaction> transactionList) {
+    public Account(int accountId, String name, int customerId) {
         this.accountId = accountId;
         this.name = name;
         this.customerId = customerId;
-        this.transactionList = transactionList;
+        getTransactions();
+    }
+
+    //Methods
+    private void getTransactions(){
+        ArrayList<Transaction>transactions = new ArrayList<>();
+        transactions = Utility.returnTransactions(accountId);
+        this.transactionList = transactions;
     }
 
     public int getAccountId() {
         return accountId;
     }
 
+    private void updateBalance() {
+        transactionList = Utility.returnTransactions(accountId);
+        int amount = 0;
+        for (int i = 0; i<transactionList.size(); i++) {
+            amount += transactionList.get(i).getAmount();
+        }
+        balance = amount;
+    }
+
     public double getBalance() {
+        updateBalance();
         return balance;
     }
 
@@ -33,5 +50,16 @@ public class Account
 
     public ArrayList getTransactionList() {
         return transactionList;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", balance=" + balance +
+                ", name='" + name + '\'' +
+                ", customerId=" + customerId +
+                ", transactionList=" + transactionList +
+                '}';
     }
 }

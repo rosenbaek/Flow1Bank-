@@ -17,6 +17,7 @@ public class Customer
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerCity = customerCity;
+        getAccounts();
     }
 
     //Getters
@@ -37,37 +38,50 @@ public class Customer
     }
 
     //Methods
-    public int withdrawMoney()
-    {
-        //Skal kobles sammen med Transaction og Account
+    private void getAccounts(){
+        ArrayList<Account>accounts = new ArrayList<>();
+        accounts = Utility.returnAccounts(customerId);
+        this.accounts = accounts;
+    }
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the amount you wish to withdraw: ");
-        amount = scanner.nextInt();
+    public void withdrawMoney()
+    {
+        //Printer Accounts
+        for (int i = 0; i<accounts.size(); i++){
+            System.out.println("Name: " + accounts.get(i).getName() + ", Account ID: " + accounts.get(i).getAccountId() + ", Balance: " + accounts.get(i).getBalance());
+        }
+        int accountId = Utility.promptForAnswerInt("Enter the account id of the account you want to deposit to: ");
+        amount = Utility.promptForAnswerInt("Enter the amount you wish to withdraw: ");
 
         if (amount <= 0)
         {
             System.out.println("You can only withdraw a positive number, try again.");
             withdrawMoney();
-        } else
-            System.out.println("You have withdrawn: " + amount);
+        } else {
+            System.out.println("You have withdrawn: " + -amount);
+            Utility.createTransactionInDatabase(-amount,accountId);
+        }
 
-        return amount;
     }
 
-    public int depositMoney()
+    public void depositMoney()
     {
-        //Skal kobles sammen med Transaction og Account
+        //Printer Accounts
+        for (int i = 0; i<accounts.size(); i++){
+            System.out.println("Name: " + accounts.get(i).getName() + ", Account ID: " + accounts.get(i).getAccountId() + ", Balance: " + accounts.get(i).getBalance());
+        }
+
+        int accountId = Utility.promptForAnswerInt("Enter the account id of the account you want to deposit to: ");
         amount = Utility.promptForAnswerInt("Enter the amount you wish to deposit: ");
         if (amount <= 0)
         {
             System.out.println("You can only deposit a positive number, try again.");
             depositMoney();
         } else {
-            System.out.println("You have deposited: " + amount);
-
+            System.out.println("You have deposited: " + amount + ", to account ID: " + accountId);
+            Utility.createTransactionInDatabase(amount,accountId);
         }
-        return amount;
+
     }
 
     public int checkBalance()
@@ -100,20 +114,22 @@ public class Customer
                 switch (choice) {
                     case "1":
                         //Deposit Money
-
-
+                        depositMoney();
+                        customerMenu();
                         break;
                     case "2":
                         //Withdraw Money
-
+                        withdrawMoney();
+                        customerMenu();
                         break;
                     case "3":
                         //Check Balance
-
+                        System.out.println(accounts);
+                        customerMenu();
                         break;
                     case "4":
                         //Print Transactions
-
+                        customerMenu();
                         break;
                     case "5":
                         //Exit
