@@ -175,6 +175,22 @@ public abstract class Utility {
         return transactions;
     }
 
+    public static ArrayList<Transaction> returnAllTransactionsFromUser(int customer_id) {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        Transaction transaction = null;
+        try {
+            ps_get_all_customer_info.setInt(1, customer_id);
+            try (ResultSet rs = ps_get_all_customer_info.executeQuery()) {
+                while (rs.next()) {
+                    transaction = new Transaction(rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getInt(8));
+                    transactions.add(transaction);
+                }
+            }
+        }   catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return transactions;
+    }
   /*  public static Customer returnAllCustomerInfo() {
         Customer customer = null;
         ArrayList<Transaction> transactions = new ArrayList<>();

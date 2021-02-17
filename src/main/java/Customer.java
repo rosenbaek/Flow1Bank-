@@ -51,11 +51,19 @@ public class Customer
             System.out.println("Name: " + accounts.get(i).getName() + ", Account ID: " + accounts.get(i).getAccountId() + ", Balance: " + accounts.get(i).getBalance());
         }
         int accountId = Utility.promptForAnswerInt("Enter the account id of the account you want to deposit to: ");
+        double balanceOfSelectedAccount = 0;
+
+        for (int i = 0; i<accounts.size(); i++){
+            if (accounts.get(i).getAccountId() == accountId) {
+                balanceOfSelectedAccount = accounts.get(i).getBalance();
+            }
+        }
+
         amount = Utility.promptForAnswerInt("Enter the amount you wish to withdraw: ");
 
-        if (amount <= 0)
+        if ((balanceOfSelectedAccount - Math.abs(amount)) < 0 )
         {
-            System.out.println("You can only withdraw a positive number, try again.");
+            System.out.println("You do not have enough money on the account");
             withdrawMoney();
         } else {
             System.out.println("You have withdrawn: " + -amount);
@@ -84,9 +92,15 @@ public class Customer
 
     }
 
-    public int checkBalance()
+    private void checkBalance()
     {
-        return 0;
+        for (int i = 0; i<accounts.size(); i++){
+            System.out.println("Name: " + accounts.get(i).getName() + ", Account ID: " + accounts.get(i).getAccountId() + ", Balance: " + accounts.get(i).getBalance());
+        }
+    }
+
+    private void printTransactions() {
+        System.out.println(Utility.returnAllTransactionsFromUser(customerId));
     }
 
     @Override
@@ -124,11 +138,12 @@ public class Customer
                         break;
                     case "3":
                         //Check Balance
-                        System.out.println(accounts);
+                        checkBalance();
                         customerMenu();
                         break;
                     case "4":
                         //Print Transactions
+                        printTransactions();
                         customerMenu();
                         break;
                     case "5":
