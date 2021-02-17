@@ -6,6 +6,8 @@ public class Main {
         //Må ikke udkommenteres
         Utility.prepareConnection();
 
+        //Customer customer = new Customer(10, "Chris", "cph");
+        //customer.customerMenu();
         DisplayMenu.displayMenu();
 
        /* //Opens connection to Database

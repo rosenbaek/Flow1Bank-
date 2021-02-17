@@ -6,11 +6,10 @@ public class Account
     private double balance;
     private String name;
     private int customerId;
-    private ArrayList transactionList;
+    private ArrayList<Transaction> transactionList;
 
-    public Account(int accountId, double balance, String name, int customerId, ArrayList transactionList) {
+    public Account(int accountId, String name, int customerId, ArrayList<Transaction> transactionList) {
         this.accountId = accountId;
-        this.balance = balance;
         this.name = name;
         this.customerId = customerId;
         this.transactionList = transactionList;

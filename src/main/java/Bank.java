@@ -17,18 +17,20 @@ public class Bank
 
     //ArrayList for Customers
 
-    public /* Something something */  ArrayList()
-    {
-
-        ArrayList<Customer> customers = new ArrayList<Customer>();
-        customers.add(new Customer(1, "Mr. Tester", "England"));
-        customers.add(new Customer(2, "Ms. Tester", "Worldwide"));
-
-        //ArrayList for Employees
-        ArrayList<Employee> employees = new ArrayList<Employee>();
-        employees.add(new Employee(01, "Goblin Bob", "Gringotts"));
-        employees.add(new Employee(02, "Goblin Bobline", "Gringotts"));
+    public int getBankId() {
+        return bankId;
     }
 
+    public String getBankName() {
+        return bankName;
+    }
 
+    public String getBankCity() {
+        return bankCity;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + bankName + ", City: " + bankCity + ", Id: " + bankId;
+    }
 }

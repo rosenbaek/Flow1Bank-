@@ -3,10 +3,10 @@ public class Transaction
     // variabler
     private int transactionId;
     private int amount;
-    private int date;
+    private String date;
     private int accountId;
 
-    public Transaction(int transactionId, int amount, int date, int accountId)
+    public Transaction(int transactionId, int amount, String date, int accountId)
     {
         this.transactionId = transactionId;
         this.amount = amount;
@@ -24,7 +24,7 @@ public class Transaction
         return amount;
     }
 
-    public int getDate()
+    public String getDate()
     {
         return date;
     }
