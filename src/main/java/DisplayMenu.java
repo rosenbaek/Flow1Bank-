@@ -55,6 +55,8 @@ public class DisplayMenu {
                     break;
                 case "5":
                     //Enter Employee
+                    Employee karl = new Employee(1, "karl", "cph");
+                    karl.employeeMenu();
                     //Todo Make Employee interface
                     break;
                 case "6":

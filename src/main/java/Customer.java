@@ -34,16 +34,18 @@ public class Customer
         return customerCity;
     }
 
-    public void setAccounts(HashMap<String,Account> accounts) {
+    private void setAccounts(HashMap<String,Account> accounts) {
         this.accounts = accounts;
     }
 
     //Methods
-    private void getAccounts(){
+    public HashMap<String,Account> getAccounts(){
         HashMap<String,Account> accounts = new HashMap<>();
         accounts = Utility.returnAccounts(customerId);
         this.accounts = accounts;
+        return accounts;
     }
+
 
     public void withdrawMoney()
     {
@@ -111,8 +113,8 @@ public class Customer
 
     private void checkBalance()
     {
-        for (int i = 0; i<accounts.size(); i++){
-            System.out.println("Name: " + accounts.get(i).getName() + ", Account ID: " + accounts.get(i).getAccountId() + ", Balance: " + accounts.get(i).getBalance());
+        for (String i : accounts.keySet()) {
+            System.out.println("Name: " + i + ", Balance: " + accounts.get(i).getBalance());
         }
     }
 
@@ -143,7 +145,7 @@ public class Customer
 
             String leftAlignFormat = "| %-4d | %-34s | %n"; //%-4d=4 digits, %-15s= 15 string charactors
             System.out.format("+------+------------------------------------+%n");
-            System.out.format("| Nr   | Options                            |%n");
+            System.out.format("| Nr   | Options   Customer: " + customerName + " %n");
             System.out.format("+------+------------------------------------+%n");
             for (int i = 0; i < menu.length; i++) {
                 System.out.format(leftAlignFormat, i + 1, menu[i]);
