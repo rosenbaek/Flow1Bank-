@@ -4,5 +4,5 @@ A program that simulates a bank user interface with the ability to act as a cust
 
 **User case diagram**
 
-[https://github.com/rosenbaek/Flow1Bank-/blob/main/UseCaseDiagram.png}
+![Diagram](Flow1Bank-/UseCaseDiagram.png)
 
