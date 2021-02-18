@@ -47,28 +47,34 @@ public class Customer
 
     public void withdrawMoney()
     {
-        //Printer Accounts
-        for (int i = 0; i<accounts.size(); i++){
-            System.out.println("Name: " + accounts.get(i).getName() + ", Account ID: " + accounts.get(i).getAccountId() + ", Balance: " + accounts.get(i).getBalance());
+        for (String i : accounts.keySet()) {
+            System.out.println("Name: " + i + ", Balance: " + accounts.get(i).getBalance());
         }
-        int accountId = Utility.promptForAnswerInt("Enter the account id of the account you want to deposit to: ");
-        double balanceOfSelectedAccount = 0;
 
-        for (int i = 0; i<accounts.size(); i++){
-            if (accounts.get(i).getAccountId() == accountId) {
-                balanceOfSelectedAccount = accounts.get(i).getBalance();
+        try {
+            String accountName = Utility.promptForAnswer("Enter the name of the account you want to withdraw to: ");
+
+            //Makes first char to uppercase
+            accountName.toLowerCase();
+            accountName = accountName.substring(0, 1).toUpperCase() + accountName.substring(1);
+
+            double balanceOfSelectedAccount = 0;
+            int accountId = accounts.get(accountName).getAccountId();
+            balanceOfSelectedAccount = accounts.get(accountName).getBalance();
+
+
+            amount = Utility.promptForAnswerInt("Selected: " + accounts.get(accountName).getName() + ". Enter the amount you wish to withdraw: ");
+
+            if ((balanceOfSelectedAccount - Math.abs(amount)) < 0) {
+                System.out.println("You do not have enough money on the account");
+                withdrawMoney();
+            } else {
+                System.out.println("You have withdrawn: " + -amount);
+                Utility.createTransactionInDatabase(-amount, accountId);
             }
-        }
-
-        amount = Utility.promptForAnswerInt("Enter the amount you wish to withdraw: ");
-
-        if ((balanceOfSelectedAccount - Math.abs(amount)) < 0 )
-        {
-            System.out.println("You do not have enough money on the account");
+        } catch (Exception e) {
+            System.out.println("Did not match any account in your database. Try again");
             withdrawMoney();
-        } else {
-            System.out.println("You have withdrawn: " + -amount);
-            Utility.createTransactionInDatabase(-amount,accountId);
         }
 
     }
@@ -76,19 +82,29 @@ public class Customer
     public void depositMoney()
     {
         //Printer Accounts
-        for (int i = 0; i<accounts.size(); i++){
-            System.out.println("Name: " + accounts.get(i).getName() + ", Account ID: " + accounts.get(i).getAccountId() + ", Balance: " + accounts.get(i).getBalance());
+        for (String i : accounts.keySet()) {
+            System.out.println("Name: " + i + ", Balance: " + accounts.get(i).getBalance());
         }
 
-        int accountId = Utility.promptForAnswerInt("Enter the account id of the account you want to deposit to: ");
-        amount = Utility.promptForAnswerInt("Enter the amount you wish to deposit: ");
-        if (amount <= 0)
-        {
-            System.out.println("You can only deposit a positive number, try again.");
+        try {
+            String accountName = Utility.promptForAnswer("Enter the name of the account you want to deposit to: ");
+            accountName.toLowerCase();
+            accountName = accountName.substring(0, 1).toUpperCase() + accountName.substring(1);
+
+            int accountId = accounts.get(accountName).getAccountId();
+            amount = Utility.promptForAnswerInt("Enter the amount you wish to deposit: ");
+
+            if (amount <= 0)
+            {
+                System.out.println("You can only deposit a positive number, try again.");
+                depositMoney();
+            } else {
+                System.out.println("You have deposited: " + amount + ", to account: " + accountName);
+                Utility.createTransactionInDatabase(amount,accountId);
+            }
+        } catch (Exception e) {
+            System.out.println("Did not match any account in your database. Try again");
             depositMoney();
-        } else {
-            System.out.println("You have deposited: " + amount + ", to account ID: " + accountId);
-            Utility.createTransactionInDatabase(amount,accountId);
         }
 
     }

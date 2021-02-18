@@ -52,6 +52,8 @@ public abstract class Utility {
     //Creates bank
     public static void createBankInDatabase(String name, String city) {
         try {
+            name.toLowerCase();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
             ps_add_bank.setString(1, name);
             ps_add_bank.setString(2, city);
             ps_add_bank.executeUpdate();
@@ -64,6 +66,8 @@ public abstract class Utility {
     //Creates Customer
     public static void createCustomerInDatabase(String name, String city, int bankId) {
         try {
+            name.toLowerCase();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
             ps_add_customer.setString(1, name);
             ps_add_customer.setString(2, city);
             ps_add_customer.setInt(3, bankId);
@@ -76,6 +80,8 @@ public abstract class Utility {
     //Creates account
     public static void createAccountInDatabase(String name, String city, int customer_id) {
         try {
+            name.toLowerCase();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
             ps_add_account.setString(1, name);
             ps_add_account.setString(2, city);
             ps_add_account.setInt(3, customer_id);
@@ -143,7 +149,6 @@ public abstract class Utility {
     }
 
     public static HashMap<String, Account> returnAccounts(int customer_id) {
-        ArrayList<Account> accounts = new ArrayList<>();
         HashMap<String, Account> HashAccounts = new HashMap<>();
         Account account = null;
         try {
@@ -152,7 +157,6 @@ public abstract class Utility {
                 while (rs.next()) {
                     account = new Account(rs.getInt(1), rs.getString(2), rs.getInt(4));
                     HashAccounts.put(account.getName(),account);
-                    accounts.add(account);
                 }
             }
         }   catch (SQLException throwables) {
