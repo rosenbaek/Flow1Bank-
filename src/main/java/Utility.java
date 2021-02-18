@@ -1,6 +1,7 @@
 import java.lang.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 //@Christian
@@ -141,21 +142,23 @@ public abstract class Utility {
         return customer;
     }
 
-    public static ArrayList<Account> returnAccounts(int customer_id) {
+    public static HashMap<String, Account> returnAccounts(int customer_id) {
         ArrayList<Account> accounts = new ArrayList<>();
+        HashMap<String, Account> HashAccounts = new HashMap<>();
         Account account = null;
         try {
             ps_get_account.setInt(1, customer_id);
             try (ResultSet rs = ps_get_account.executeQuery()) {
                 while (rs.next()) {
                     account = new Account(rs.getInt(1), rs.getString(2), rs.getInt(4));
+                    HashAccounts.put(account.getName(),account);
                     accounts.add(account);
                 }
             }
         }   catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return accounts;
+        return HashAccounts;
     }
 
     public static ArrayList<Transaction> returnTransactions(int account_id) {

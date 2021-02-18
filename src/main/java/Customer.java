@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Customer
@@ -8,7 +9,7 @@ public class Customer
     private int customerId;
     private String customerName;
     private String customerCity;
-    private ArrayList<Account> accounts;
+    private HashMap<String,Account> accounts;
     private int amount;
 
     //Constructor
@@ -33,13 +34,13 @@ public class Customer
         return customerCity;
     }
 
-    public void setAccounts(ArrayList<Account> accounts) {
+    public void setAccounts(HashMap<String,Account> accounts) {
         this.accounts = accounts;
     }
 
     //Methods
     private void getAccounts(){
-        ArrayList<Account>accounts = new ArrayList<>();
+        HashMap<String,Account> accounts = new HashMap<>();
         accounts = Utility.returnAccounts(customerId);
         this.accounts = accounts;
     }
