@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class DisplayMenu {
 
     public static Customer customer;
+    public static Employee employee;
 
     public static void displayMenu(){
         Scanner scan = new Scanner(System.in);
@@ -57,8 +58,13 @@ public class DisplayMenu {
                     break;
                 case "5":
                     //Enter Employee
-                    Employee karl = new Employee(1, "karl", "cph");
-                    karl.employeeMenu();
+
+                    for (Employee tmp:Utility.returnAllEmployees()) {
+                        System.out.println(tmp.toString());
+                    }
+
+                    employee = Utility.returnEmployee(Utility.promptForAnswerInt("Write ID on the employee you will choose"));
+                    employee.employeeMenu();
                     //Todo Make Employee interface
                     break;
                 case "6":

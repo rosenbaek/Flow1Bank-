@@ -131,15 +131,42 @@ public class Employee
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "employeeId=" + employeeId +
-                ", employeeName='" + employeeName + '\'' +
-                '}';
+        return "ID: " + employeeId + ", Name: " + employeeName + ", City: " + employeeCity;
+    }
+
+    private void transferMoney() {
+        Customer fromCustomer = null;
+        Customer toCustomer = null;
+        for (Customer tmp:Utility.returnAllCustomers()) {
+            System.out.println(tmp.toString());
+        }
+        fromCustomer = Utility.returnCustomer(Utility.promptForAnswerInt("Write ID on the customer you will transfer from"));
+        for (String i : fromCustomer.getAccounts().keySet()) {
+            System.out.println("Name: " + i + ", Balance: " + fromCustomer.getAccounts().get(i).getBalance());
+        }
+        String fromAccountName = Utility.promptForAnswer("Enter the name of the account you want to transfer from: ");
+        fromAccountName.toLowerCase();
+        fromAccountName = fromAccountName.substring(0, 1).toUpperCase() + fromAccountName.substring(1);
+
+        int fromAccountId = fromCustomer.getAccounts().get(fromAccountName).getAccountId();
+        int amount = Math.abs(Utility.promptForAnswerInt("Enter the amount you wish to transfer: "));
+        Utility.createTransactionInDatabase(-amount,fromAccountId); //Takes money from sender
+
+        toCustomer =  Utility.returnCustomer(Utility.promptForAnswerInt("Write ID on the customer you will transfer to"));
+        for (String i : toCustomer.getAccounts().keySet()) {
+            System.out.println("Name: " + i + ", Balance: " + toCustomer.getAccounts().get(i).getBalance());
+        }
+        String toAccountName = Utility.promptForAnswer("Enter the name of the account you want to deposit to: ");
+        toAccountName.toLowerCase();
+        toAccountName = toAccountName.substring(0, 1).toUpperCase() + toAccountName.substring(1);
+        int toAccountId = toCustomer.getAccounts().get(toAccountName).getAccountId();
+        Utility.createTransactionInDatabase(amount,toAccountId); //Deliveres money for the reciever
+        System.out.println("You have deposited: " + amount + ", to account: " + toAccountName);
     }
 
     public void employeeMenu() {
         Scanner scan = new Scanner(System.in);
-        String[] menu = {"Deposit Money", "Withdraw Money", "Check Balance", "Print Transactions","Exit"};
+        String[] menu = {"Deposit Money", "Withdraw Money", "Check Balance", "Print Transactions", "Transfer Money", "Exit"};
 
         String leftAlignFormat = "| %-4d | %-34s | %n"; //%-4d=4 digits, %-15s= 15 string charactors
         System.out.format("+------+------------------------------------+%n");
@@ -176,6 +203,12 @@ public class Employee
                     employeeMenu();
                     break;
                 case "5":
+                    //Transfer Money
+                    System.out.println("Transfer money");
+                    transferMoney();
+                    DisplayMenu.displayMenu();
+                    break;
+                case "6":
                     //Exit
                     DisplayMenu.displayMenu();
                     break;

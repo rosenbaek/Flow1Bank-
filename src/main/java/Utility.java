@@ -23,6 +23,7 @@ public abstract class Utility {
 
     private static PreparedStatement ps_add_account;
     private static PreparedStatement ps_get_account;
+    private static PreparedStatement ps_get_all_employee;
 
     public static String promptForAnswer(String text) {
         System.out.println(text);
@@ -178,6 +179,21 @@ public abstract class Utility {
         return customers;
     }
 
+    //Returns all Employee
+    public static ArrayList<Employee> returnAllEmployees() {
+        ArrayList<Employee> employees = new ArrayList<>();
+        Employee employee = null;
+        try (ResultSet rs = ps_get_all_employee.executeQuery()){
+            while (rs.next()) {
+                employee = new Employee(rs.getInt(1), rs.getString(2), rs. getString(3));
+                employees.add(employee);
+            }
+        }  catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return employees;
+    }
+
     //Returns Customers
     public static Customer returnCustomer(int id) {
         Customer customer = null;
@@ -270,6 +286,7 @@ public abstract class Utility {
             ps_add_customer = con.prepareStatement("insert into customer (name, city, bank_id) values (?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps_add_employee = con.prepareStatement("insert into employee (name, city, bank_id) values (?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps_get_all_customers = con.prepareStatement("select * from customer");
+            ps_get_all_employee = con.prepareStatement("select * from employee");
             ps_get_customer = con.prepareStatement("select * from customer where customer_id = ?");
             ps_get_employee = con.prepareStatement("select * from employee where employee_id = ?");
             ps_add_account = con.prepareStatement("insert into accounts (name, city, customer_id) values (?,?,?)");
