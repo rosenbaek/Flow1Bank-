@@ -29,19 +29,21 @@ public class DisplayMenu {
                     break;
                 case "2":
                     //Create Customer
-                    //Todo save customer in java variable
-                    /*System.out.println("Is your bank listed?");
                     for (Bank tmp:Utility.returnBanks()) {
                         System.out.println(tmp.toString());
                     }
-                    String answer = Utility.promptForAnswer("Yes = y or No = n");*/
-                    System.out.println("Ebberød bank har id = 1");
-                    Utility.createCustomerInDatabase(Utility.promptForAnswer("Enter Customer Name"), Utility.promptForAnswer("Enter Customer City"), Utility.promptForAnswerInt("Enter Bank Id") );
+                    Customer cus = null;
+                    cus = Utility.createCustomerInDatabase(Utility.promptForAnswer("Enter Customer Name"), Utility.promptForAnswer("Enter Customer City"), Utility.promptForAnswerInt("Enter Bank Id") );
+                    cus.customerMenu();
                     break;
                 case "3":
                     //Create Employee
-                    System.out.println("Ebberød bank har id = 1");
-                    //Todo create empolyee interface and database call
+                    for (Bank tmp:Utility.returnBanks()) {
+                        System.out.println(tmp.toString());
+                    }
+                    Employee emp = null;
+                    emp = Utility.createEmployeeInDatabase(Utility.promptForAnswer("Enter Employee Name"), Utility.promptForAnswer("Enter Employee City"), Utility.promptForAnswerInt("Enter Bank Id"));
+                    emp.employeeMenu();
                     break;
                 case "4":
                     //Enter Customer

@@ -13,11 +13,13 @@ public abstract class Utility {
     private static PreparedStatement ps_add_customer;
     private static PreparedStatement ps_get_all_customers;
     private static PreparedStatement ps_get_customer;
+    private static PreparedStatement ps_get_employee;
     private static PreparedStatement ps_add_bank;
     private static PreparedStatement ps_get_bank;
     private static PreparedStatement ps_add_transaction;
     private static PreparedStatement ps_get_transaction;
     private static PreparedStatement ps_get_all_customer_info;
+    private static PreparedStatement ps_add_employee;
 
     private static PreparedStatement ps_add_account;
     private static PreparedStatement ps_get_account;
@@ -64,7 +66,8 @@ public abstract class Utility {
     }
 
     //Creates Customer
-    public static void createCustomerInDatabase(String name, String city, int bankId) {
+    public static Customer createCustomerInDatabase(String name, String city, int bankId) {
+        Customer c = null;
         try {
             name.toLowerCase();
             name = name.substring(0, 1).toUpperCase() + name.substring(1);
@@ -72,9 +75,52 @@ public abstract class Utility {
             ps_add_customer.setString(2, city);
             ps_add_customer.setInt(3, bankId);
             ps_add_customer.executeUpdate();
+
+
+            int id = 0;
+
+
+            try (ResultSet generatedKeys = ps_add_customer.getGeneratedKeys())
+            {
+                if (generatedKeys.next())
+                {
+                    id = generatedKeys.getInt(1);
+                }
+            }
+            c = returnCustomer(id);
         }  catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return c;
+    }
+
+    //Creates employee
+    public static Employee createEmployeeInDatabase(String name, String city, int bankId) {
+        Employee e = null;
+        try {
+            name.toLowerCase();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1);
+            ps_add_employee.setString(1, name);
+            ps_add_employee.setString(2, city);
+            ps_add_employee.setInt(3, bankId);
+            ps_add_employee.executeUpdate();
+
+            int id = 0;
+
+
+            try (ResultSet generatedKeys = ps_add_employee.getGeneratedKeys())
+            {
+                if (generatedKeys.next())
+                {
+                    id = generatedKeys.getInt(1);
+                }
+            }
+            e = returnEmployee(id);
+
+        }  catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return e;
     }
 
     //Creates account
@@ -132,7 +178,7 @@ public abstract class Utility {
         return customers;
     }
 
-    //Returns all Customers
+    //Returns Customers
     public static Customer returnCustomer(int id) {
         Customer customer = null;
         try {
@@ -146,6 +192,22 @@ public abstract class Utility {
                 throwables.printStackTrace();
         }
         return customer;
+    }
+
+    //Returns Employee
+    public static Employee returnEmployee(int id) {
+        Employee e = null;
+        try {
+            ps_get_employee.setInt(1, id);
+            try (ResultSet rs = ps_get_employee.executeQuery()) {
+                while (rs.next()) {
+                    e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
+                }
+            }
+        }   catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return e;
     }
 
     public static HashMap<String, Account> returnAccounts(int customer_id) {
@@ -198,28 +260,6 @@ public abstract class Utility {
         }
         return transactions;
     }
-  /*  public static Customer returnAllCustomerInfo() {
-        Customer customer = null;
-        ArrayList<Transaction> transactions = new ArrayList<>();
-        Transaction transaction = null;
-        ArrayList<Account> accounts = new ArrayList<>();
-        Account account = null;
-        try (ResultSet rs = ps_get_all_customer_info.executeQuery()){
-            int accountID = 0;
-            while (rs.next()) {
-                if (customer == null) {
-                    customer = new Customer(rs.getInt(9), rs.getString(10), rs.getString(11));
-                    accountID = rs.getInt(1);
-                } else {
-                    transaction = new Transaction(rs.getInt(5),rs.getInt(6),rs.getString(7), rs.getInt(8));
-                    transactions.add(transaction);
-                }
-            }
-        }  catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return customer;
-    }*/
 
     public static void prepareConnection() {
         try
@@ -227,9 +267,11 @@ public abstract class Utility {
             con = DriverManager.getConnection(URL,USER,PASS);
             ps_add_bank = con.prepareStatement("insert into bank (name, city) values (?,?)");
             ps_get_bank = con.prepareStatement("select * from bank");
-            ps_add_customer = con.prepareStatement("insert into customer (name, city, bank_id) values (?,?,?)");
+            ps_add_customer = con.prepareStatement("insert into customer (name, city, bank_id) values (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps_add_employee = con.prepareStatement("insert into employee (name, city, bank_id) values (?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps_get_all_customers = con.prepareStatement("select * from customer");
             ps_get_customer = con.prepareStatement("select * from customer where customer_id = ?");
+            ps_get_employee = con.prepareStatement("select * from employee where employee_id = ?");
             ps_add_account = con.prepareStatement("insert into accounts (name, city, customer_id) values (?,?,?)");
             ps_add_transaction = con.prepareStatement("insert into transactions (amount, account_id) values (?,?)");
             ps_get_transaction = con.prepareStatement("select * from transactions where account_id = ?");
