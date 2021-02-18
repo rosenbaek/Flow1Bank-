@@ -48,7 +48,7 @@ public class Account
         return customerId;
     }
 
-    public ArrayList getTransactionList() {
+    public ArrayList<Transaction> getTransactionList() {
         return transactionList;
     }
 

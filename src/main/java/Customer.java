@@ -117,7 +117,19 @@ public class Customer
     }
 
     private void printTransactions() {
-        System.out.println(Utility.returnAllTransactionsFromUser(customerId));
+        //System.out.println(Utility.returnAllTransactionsFromUser(customerId));
+
+
+
+            for (String x : accounts.keySet()) {
+                for (int i = 0; i< accounts.get(x).getTransactionList().size(); i++) {
+                    System.out.println("Name: " + accounts.get(x).getName() + ", Amount: " + accounts.get(x).getTransactionList().get(i).getAmount() + ", Date: " + accounts.get(x).getTransactionList().get(i).getDate());
+                }
+            }
+            //for (int x = 0; x<accounts.get(i).getTransactionList().size(); x++) {
+              //  System.out.println("Account name: " + accounts.get(i).getName() + " " + accounts.get(i).getTransactionList().get(x).toString());
+            //}
+
     }
 
     @Override
